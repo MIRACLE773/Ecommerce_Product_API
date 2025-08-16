@@ -9,3 +9,4 @@ urlpatterns = [
     path('token/', CustomAuthToken.as_view(), name='api_token_auth'),
     path('', include(router.urls)),
 ]
+
