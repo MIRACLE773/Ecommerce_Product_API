@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # api/tests.py
 from django.test import TestCase
 from rest_framework.test import APITestCase
@@ -35,3 +36,8 @@ class AuthorTestCase(APITestCase):
         # Test if the books are linked to the correct author
         self.assertEqual(self.author1.book_set.first().title, "May of the Year")
         self.assertEqual(self.author2.book_set.first().title, "Lead of Vamhu")
+=======
+from django.test import TestCase
+
+# Create your tests here.
+>>>>>>> c94f0dd118e55d659f3cdd132b0de343570dbc87

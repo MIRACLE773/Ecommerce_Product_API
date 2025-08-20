@@ -1,5 +1,5 @@
 """
-URL configuration for advanced_api_project project.
+URL configuration for api_project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # all API routes
+    path('api/', include('api.urls')),
+    path('api-token-auth/', include('api.urls')),
 ]
