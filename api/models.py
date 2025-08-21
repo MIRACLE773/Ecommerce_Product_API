@@ -1,0 +1,27 @@
+from django.db import models
+
+<<<<<<< HEAD
+# Author model represents a book author
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+# Book model represents a book written by an Author
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    publication_year = models.IntegerField()
+    author = models.ForeignKey(Author, related_name="books", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.title} ({self.publication_year})"
+=======
+class Book(models.Model):
+    title = models.CharField(max_length=25)
+    author = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+>>>>>>> c94f0dd118e55d659f3cdd132b0de343570dbc87
