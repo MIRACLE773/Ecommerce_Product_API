@@ -9,7 +9,8 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]  # allows read for all, write for authenticated
+    permission_classes = [IsAuthenticatedOrReadOnly]# allows read for all, write for authenticated
+
 
 # DetailView → Fetch a single book by ID
 class BookDetailView(generics.RetrieveAPIView):
