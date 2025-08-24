@@ -11,7 +11,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from taggit.models import Tag
 
-
 # Registration view
 def register(request):
     if request.method == 'POST':
