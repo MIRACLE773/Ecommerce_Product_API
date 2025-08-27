@@ -17,7 +17,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 # Application definition
-INSTALLED_APPS = [
+INSTALLED_APPS = [ 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
