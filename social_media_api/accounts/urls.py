@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import register, user_login, CustomAuthToken, follow_user, unfollow_user
+from .views import UserView, FollowUserView, UnfollowUserView
 
 urlpatterns = [
-    path('register/', register, name='register'),
-    path('login/', user_login, name='login'),
-    path('profile/', user_login, name='profile'),
-    path('token/', CustomAuthToken.as_view(), name='token'),
-    path('follow/<int:user_id>/', follow_user, name='follow_user'),
-    path('unfollow/<int:user_id>/', unfollow_user, name='unfollow_user'),
-    
+    path("me/", UserView.as_view(), name="user-detail"),
+    path("follow/<int:user_id>/", FollowUserView.as_view(), name="follow-user"),
+    path("unfollow/<int:user_id>/", UnfollowUserView.as_view(), name="unfollow-user"),
 ]
