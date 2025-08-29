@@ -25,7 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "miraclejoseph.pythonanywhere.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "miraclejoseph.pythonanywhere.com", "social-media-api-2bqi.onrender.com"]
 
 
 # Application definition
