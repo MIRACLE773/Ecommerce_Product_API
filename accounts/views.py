@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .serializers import RegisterSerializer, LoginSerializer
+from django.shortcuts import render
+
 
 # Register API
 class RegisterView(generics.CreateAPIView):

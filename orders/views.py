@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Order, OrderItem
 from .serializers import OrderSerializer
 from products.models import Product
+from django.shortcuts import render
 
 
 # Place order
@@ -48,4 +49,3 @@ class OrderDetailView(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
-
