@@ -21,12 +21,19 @@ from django.conf.urls.static import static
 from ecommerce_product_api.views import home  # homepage view
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
 
     # Homepage
     path('', home, name='home'),
 
-    # API endpoints
+    # App URLs
+    path('accounts/', include('accounts.urls')),       # user auth
+    path('products/', include('products.urls')),       # product pages
+    path('orders/', include('orders.urls')),           # order pages
+    path('cart/', include('cart.urls')),               # cart pages
+
+    # Optional: API endpoints
     path('api/accounts/', include('accounts.urls')),
     path('api/products/', include('products.urls')),
     path('api/orders/', include('orders.urls')),
@@ -37,3 +44,5 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+

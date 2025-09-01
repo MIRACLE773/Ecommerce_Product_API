@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; text-align: center; }
+        img { max-width: 300px; border-radius: 10px; margin-bottom: 15px; }
+        h1 { color: #333; }
+        p { color: #555; font-size: 16px; }
+        .price { font-weight: bold; font-size: 18px; margin: 10px 0; }
+        button { padding: 10px 15px; border: none; background: #222; color: #fff; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #555; }
+        a { display: block; margin-top: 20px; color: #222; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% endif %}
+    <p>{{ product.description }}</p>
+    <p class="price">₦{{ product.price }}</p>
+    
+    <form action="{% url 'add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Add to Cart / Order Now</button>
+    </form>
+    
+    <a href="{% url 'home' %}">← Back to Home</a>
+</body>
+</html>

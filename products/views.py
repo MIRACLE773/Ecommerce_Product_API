@@ -1,23 +1,11 @@
-from django.shortcuts import render
-from rest_framework import generics
+from django.shortcuts import render, get_object_or_404
 from .models import Product
-from .serializers import ProductSerializer
-from rest_framework.filters import SearchFilter
-from django_filters.rest_framework import DjangoFilterBackend
 
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'home.html', {'products': products})
 
-# List all products and search/filter
-class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = ['name', 'category', 'description']
-    filterset_fields = ['category', 'price']
-    
-
-# Retrieve single product
-class ProductDetailView(generics.RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'id'
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'product_detail.html', {'product': product})
 

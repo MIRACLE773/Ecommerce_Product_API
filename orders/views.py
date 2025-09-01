@@ -1,51 +1,28 @@
-from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from cart.models import Cart
 from .models import Order, OrderItem
-from .serializers import OrderSerializer
-from products.models import Product
-from django.shortcuts import render
+
+@login_required
+def checkout(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = cart.items.all()
+
+    if request.method == "POST":
+        order = Order.objects.create(user=request.user, total_price=cart.get_total_price())
+        for item in cart_items:
+            OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+        cart.items.all().delete()
+        return redirect("payment", order_id=order.id)
+
+    return render(request, "checkout.html", {'cart': cart, 'cart_items': cart_items})
+
+@login_required
+def payment(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if request.method == "POST":
+        # Simulate payment logic
+        return redirect('product_list')
+    return render(request, 'payment.html', {'order': order})
 
 
-# Place order
-class OrderCreateView(generics.CreateAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        user = request.user
-        products_data = request.data.get('products', [])
-        if not products_data:
-            return Response({'error': 'No products provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-        order = Order.objects.create(user=user)
-        total = 0
-        for item in products_data:
-            product = Product.objects.get(id=item['product_id'])
-            quantity = item.get('quantity', 1)
-            OrderItem.objects.create(order=order, product=product, quantity=quantity)
-            total += product.price * quantity
-
-        order.total_price = total
-        order.save()
-        serializer = OrderSerializer(order)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-# List user orders
-class OrderListView(generics.ListAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
-
-
-# Retrieve/update/cancel single order
-class OrderDetailView(generics.RetrieveUpdateAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
-    lookup_field = 'id'
-
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
