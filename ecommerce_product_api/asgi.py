@@ -1,5 +1,5 @@
 """
-ASGI config for ecommerce_product_api project.
+ASGI config for ecommerce_product_API project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_product_api.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_product_API.settings')
 
 application = get_asgi_application()

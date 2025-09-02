@@ -1,27 +1,33 @@
 from django.db import models
 from django.conf import settings
-from products.models import Product
+from django.utils import timezone
+
+User = settings.AUTH_USER_MODEL
 
 class Order(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_paid = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    total_price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"Order {self.id} by {self.user.username}"
+        return f"Order {self.id} ({self.user})"
 
-    # ✅ Add this so Admin can show total_price
-    def total_price(self):
-        return sum(item.product.price * item.quantity for item in self.items.all())
-    total_price.short_description = "Total Price"  # label for admin
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product_name = models.CharField(max_length=200)
+    product_id = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} (Order {self.order.id})"
+        return f"{self.quantity} x {self.product_name}"

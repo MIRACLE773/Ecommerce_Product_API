@@ -1,5 +1,5 @@
 """
-URL configuration for ecommerce_product_api project.
+URL configuration for ecommerce_product_API project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -16,33 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from ecommerce_product_api.views import home  # homepage view
 
 urlpatterns = [
-    # Admin
     path('admin/', admin.site.urls),
-
-    # Homepage
-    path('', home, name='home'),
-
-    # App URLs
-    path('accounts/', include('accounts.urls')),       # user auth
-    path('products/', include('products.urls')),       # product pages
-    path('orders/', include('orders.urls')),           # order pages
-    path('cart/', include('cart.urls')),               # cart pages
-
-    # Optional: API endpoints
-    path('api/accounts/', include('accounts.urls')),
-    path('api/products/', include('products.urls')),
-    path('api/orders/', include('orders.urls')),
-    path('api/cart/', include('cart.urls')),
+    path('api/products/', include('products.urls')),  # products app URLs
+    path('api/cart/', include('cart.urls')),          # cart app URLs
+    path('api/orders/', include('orders.urls')),      # orders app URLs
+    path('api/accounts/', include('accounts.urls')),  # accounts app URLs
 ]
-
-# Serve static & media files in development
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
 
