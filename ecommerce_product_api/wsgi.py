@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_product_api.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce_product_API.settings')
 
 application = get_wsgi_application()
