@@ -17,3 +17,17 @@ It includes features like:
 ## Author
 
 Miracle Joseph
+
+
+{
+    "username": "blesshu",
+    "email": "koyuhjbe45@gmail.com",
+    "password": "mjmusic001&#",
+    "password2": "mjmusic001&#"
+}
+
+
+{
+    "username": "blesshu",
+    "password": "mjmusic001&#"
+}
