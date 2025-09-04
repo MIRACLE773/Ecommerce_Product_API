@@ -20,14 +20,14 @@ Miracle Joseph
 
 
 {
-    "username": "blesshu",
-    "email": "koyuhjbe45@gmail.com",
-    "password": "mjmusic001&#",
-    "password2": "mjmusic001&#"
+    "username": "blesssri",
+    "email": "alxfashjo@gmail.com",
+    "password": "alxbe890&##",
+    "password2": "alxbe890&##"
 }
 
 
 {
-    "username": "blesshu",
-    "password": "mjmusic001&#"
+    "username": "joseph",
+    "password": "uyeafczi&#"
 }

@@ -1,19 +1,29 @@
-from rest_framework.authtoken.models import Token
+from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.generics import CreateAPIView, GenericAPIView
+from rest_framework.permissions import AllowAny
 from django.contrib.auth import authenticate
-from rest_framework import generics
-from rest_framework.permissions import AllowAny  # ← add this
-from .serializers import LoginSerializer, RegisterSerializer
+
+from .serializers import RegisterSerializer, LoginSerializer
 
 
-# Register API
-class RegisterView(generics.CreateAPIView):
+class RegisterView(CreateAPIView):
     serializer_class = RegisterSerializer
-    permission_classes = [AllowAny] 
-    authentication_classes = []  # ← add this`
+    permission_classes = [AllowAny]
+    authentication_classes = []
 
-# Login API
-class LoginView(generics.GenericAPIView):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        # Only send congratulations message
+        return Response(
+            {"message": f"Congratulations {user.username}, your account has been created!"},
+            status=status.HTTP_201_CREATED
+        )
+
+
+class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
     permission_classes = [AllowAny]
     authentication_classes = []
@@ -27,6 +37,8 @@ class LoginView(generics.GenericAPIView):
             password=serializer.validated_data['password']
         )
         if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key})  # ← here you return the token
-        return Response({"error": "Invalid credentials"}, status=400)
+            from rest_framework.authtoken.models import Token
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({"token": token.key})
+        return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+

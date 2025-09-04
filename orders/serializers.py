@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Order, OrderItem
-from cart.serializers import CartItemSerializer
 from cart.models import Cart
+
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +26,11 @@ class CreateOrderSerializer(serializers.Serializer):
     def create(self, validated_data):
         user = self.context['request'].user
         cart = Cart.objects.get(user=user)
+
+        if not cart.items.exists():
+            raise serializers.ValidationError("Cart is empty. Add items before creating an order.")
+
+        # Create the order
         order = Order.objects.create(user=user, total_price=cart.total)
 
         # Create OrderItems
@@ -41,4 +46,5 @@ class CreateOrderSerializer(serializers.Serializer):
         # Clear the cart after order creation
         cart.items.all().delete()
 
+        # ✅ return the order instance, not serialized data
         return order
