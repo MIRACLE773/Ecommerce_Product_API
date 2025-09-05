@@ -1,0 +1,24 @@
+# Environment
+.env
+venv/
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Django
+staticfiles/
+media/
+*.log
+*.pot
+*.mo
+
+# VSCode
+.vscode/
+
+# Mac (optional)
+.DS_Store
